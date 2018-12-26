@@ -1,0 +1,60 @@
+﻿@model Project_MovieApplication.Models.Movie
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+
+<form asp-controller="Movies" asp-action="Index" method="get">
+    <p>
+        <select asp-for="MovieGenre" asp-items="Html.GetEnumSelectList<Genre>()">
+            <option value="">All</option>
+        </select>
+    </p>
+</form>
+
+
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <!--
+    <div class="form-group">
+        <label asp-for="AverageRating" class="control-label"></label>
+        <input asp-for="AverageRating" class="form-control" />
+        <span asp-validation-for="AverageRating" class="text-danger"></span>
+    </div>-->
+            <div class="form-group">
+                <label asp-for="MovieGenre" class="control-label"></label>
+                <select asp-for="MovieGenre" asp-items="Html.GetEnumSelectList<Genre>()" class="form-control"></select>
+                <span asp-validation-for="MovieGenre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
