@@ -79,17 +79,17 @@ namespace Project_MovieApplication.Controllers
             return View(viewModel);
         }
 
-        private static void CountReviews(Movie movie)
+        private void CountReviews(Movie movie)
         {
             movie.NoOfReviews += 1;
         }
 
-        private static void CalculateMovieScore(Review review, Movie movie)
+        private void CalculateMovieScore(Review review, Movie movie)
         {
             movie.AverageRating += review.Rating;
         }
 
-        private static void CalculateAverageScore(Movie movie)
+        private void CalculateAverageScore(Movie movie)
         {
             movie.AverageRating = movie.AverageRating / movie.NoOfReviews;
         }
