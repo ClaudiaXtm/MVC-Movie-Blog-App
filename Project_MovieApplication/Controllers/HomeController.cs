@@ -12,6 +12,7 @@ namespace Project_MovieApplication.Controllers
 {
     public class HomeController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
@@ -25,9 +26,19 @@ namespace Project_MovieApplication.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Member")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+      
+        public IActionResult Analytics()
+        {
+            ViewData["Message"] = "Your analytics page.";
 
             return View();
         }

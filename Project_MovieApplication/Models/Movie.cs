@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace Project_MovieApplication.Models
         [Required]
         [Range(0, 10)]
         [Display(Name ="Movie score")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal AverageRating { get; set; }
 
         [EnumDataType(typeof(Genre))]
@@ -29,7 +31,7 @@ namespace Project_MovieApplication.Models
  
         public int NoOfReviews { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImagePath { get; set; }
     }
 
     public enum Genre

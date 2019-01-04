@@ -23,11 +23,7 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AverageRating" class="control-label"></label>
-                <input asp-for="AverageRating" class="form-control" />
-                <span asp-validation-for="AverageRating" class="text-danger"></span>
-            </div>
+       
             <div class="form-group">
                 <label asp-for="MovieGenre" class="control-label"></label>
                 <select asp-for="MovieGenre" asp-items="Html.GetEnumSelectList<Genre>()" class="form-control"></select>

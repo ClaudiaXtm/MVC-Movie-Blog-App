@@ -46,7 +46,7 @@ namespace Project_MovieApplication.Data
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user,"Member").Wait();
+                    userManager.AddToRoleAsync(user,Roles.Member.ToString()).Wait();
                 }
             }
 
@@ -55,6 +55,81 @@ namespace Project_MovieApplication.Data
                 IdentityUser user = new IdentityUser();
                 user.UserName = "Test@email.com";
                 user.Email = "Test@email.com";
+
+
+                IdentityResult result = userManager.CreateAsync(user, "Password123!").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Customer").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("Customer1@email.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser();
+                user.UserName = "Customer1@email.com";
+                user.Email = "Customer1@email.com";
+
+
+                IdentityResult result = userManager.CreateAsync(user, "Password123!").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Customer").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("Customer2@email.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser();
+                user.UserName = "Customer2@email.com";
+                user.Email = "Customer2@email.com";
+
+
+                IdentityResult result = userManager.CreateAsync(user, "Password123!").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Customer").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("Customer3@email.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser();
+                user.UserName = "Customer3@email.com";
+                user.Email = "Customer3@email.com";
+
+
+                IdentityResult result = userManager.CreateAsync(user, "Password123!").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Customer").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("Customer4@email.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser();
+                user.UserName = "Customer4@email.com";
+                user.Email = "Customer4@email.com";
+
+
+                IdentityResult result = userManager.CreateAsync(user, "Password123!").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Customer").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("Customer5@email.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser();
+                user.UserName = "Customer5@email.com";
+                user.Email = "Customer5@email.com";
 
 
                 IdentityResult result = userManager.CreateAsync(user, "Password123!").Result;

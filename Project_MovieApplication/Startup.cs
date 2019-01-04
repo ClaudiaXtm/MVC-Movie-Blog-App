@@ -39,27 +39,28 @@ namespace Project_MovieApplication
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
-
             //Asta merge relativ, doar ca nu distinge rolurile in authorize
-          services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
+            //      .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddRoleManager<RoleManager<IdentityRole>>()
-            //        .AddDefaultUI()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, ApplicationRole>(
+                    options => options.Stores.MaxLengthForKeys = 128)
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MembersOnly", policy => policy.RequireRole(Roles.Member.ToString()));
+                options.AddPolicy("CustomersOnly", policy => policy.RequireRole("Customer"));
+            });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, RoleManager<ApplicationRole> roleManager,
+  UserManager<ApplicationUser> userManager /*UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager*/)
         {
             if (env.IsDevelopment())
             {
@@ -78,11 +79,10 @@ namespace Project_MovieApplication
 
             app.UseAuthentication();
 
-           IdentityDataInitializer.SeedIdentityData(userManager, roleManager);
-            //DbInitializer.SeedDb(context, userManager);
-            //new SeedUserRoles(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).SeedAsync();
-           
-
+            SeedDatabaseWithUsersAndRoles.Initialize(context, userManager, roleManager).Wait();
+            // IdentityDataInitializer.SeedIdentityData(userManager, roleManager);
+            DbInitializer.SeedDb(context);
+       
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

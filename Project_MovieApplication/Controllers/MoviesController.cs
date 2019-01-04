@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,7 @@ namespace Project_MovieApplication.Controllers
     public class MoviesController : Controller
     {
         private readonly ApplicationDbContext _context;
+
 
         public MoviesController(ApplicationDbContext context)
         {
@@ -37,6 +39,7 @@ namespace Project_MovieApplication.Controllers
 
             Movie movie = await _context.Movie
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (movie == null)
             {
                 return NotFound();
@@ -129,6 +132,7 @@ namespace Project_MovieApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+         
                 movie.AverageRating = 0;
                 movie.NoOfReviews = 0;
                 _context.Add(movie);
@@ -139,6 +143,7 @@ namespace Project_MovieApplication.Controllers
         }
 
         // GET: Movies/Edit/5
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -199,6 +204,7 @@ namespace Project_MovieApplication.Controllers
 
             var movie = await _context.Movie
                 .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (movie == null)
             {
                 return NotFound();
@@ -213,7 +219,9 @@ namespace Project_MovieApplication.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movie = await _context.Movie.FindAsync(id);
+            
             _context.Movie.Remove(movie);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -224,4 +232,6 @@ namespace Project_MovieApplication.Controllers
         }
       
     }
+
+   
 }
