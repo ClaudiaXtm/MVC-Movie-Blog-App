@@ -4,25 +4,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace Project_MovieApplication.Data
 {
     public static class DbInitializer
     {
+  
+
         public static void SeedDb(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             SeedMovie(context);
             SeedUser(userManager);
+      
+            
         }
+
+
+      
 
         private static void SeedUser(UserManager<IdentityUser> userManager)
         {
-            IdentityUser user = new IdentityUser
-            {
-                UserName = "Member1@email.com",
-                Email = "Member1@email.com"
-            };
+            //IdentityUser user = new IdentityUser
+            //{
+            //    UserName = "Member1@email.com",
+            //    Email = "Member1@email.com"
+            //};
 
-            userManager.CreateAsync(user, "Password123!").Wait();
+            //userManager.CreateAsync(user, "Password123!").Wait();
 
             IdentityUser customer1 = new IdentityUser
             {
@@ -68,14 +76,31 @@ namespace Project_MovieApplication.Data
         private static void SeedMovie(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
-            context.Movie.Add(
-                new Models.Movie()
-                {
-                    Title = "Pulp fiction",
-                    Description = "Vincent Vega (John Travolta) and Jules Winnfield (Samuel L. Jackson) are hitmen with a penchant for philosophical discussions.",
-                    AverageRating = 8
-                });
-            context.SaveChanges();
-        }
+        
+                context.Movie.Add(
+                    new Models.Movie()
+                    {
+                        Title = "Pulp fiction",
+                        Description = "Vincent Vega (John Travolta) and Jules Winnfield (Samuel L. Jackson) are hitmen with a penchant for philosophical discussions.",
+                        AverageRating = 8
+                    });
+                context.Movie.Add(
+                    new Models.Movie()
+                    {
+                        Title = "Harry Potter",
+                        Description = "best movie ever",
+                        AverageRating = 10
+                    });
+                context.SaveChanges();
+            
+        } 
+
+
+
+     
     }
+
+
+
+
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project_MovieApplication.Models;
 
@@ -15,6 +17,7 @@ namespace Project_MovieApplication.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Customer")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

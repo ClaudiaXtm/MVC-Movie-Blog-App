@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Project_MovieApplication.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims;
 
 namespace Project_MovieApplication
 {
@@ -37,14 +38,28 @@ namespace Project_MovieApplication
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
+
+            //Asta merge relativ, doar ca nu distinge rolurile in authorize
+          services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddRoleManager<RoleManager<IdentityRole>>()
+            //        .AddDefaultUI()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -63,7 +78,10 @@ namespace Project_MovieApplication
 
             app.UseAuthentication();
 
-            DbInitializer.SeedDb(context, userManager);
+           IdentityDataInitializer.SeedIdentityData(userManager, roleManager);
+            //DbInitializer.SeedDb(context, userManager);
+            //new SeedUserRoles(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).SeedAsync();
+           
 
             app.UseMvc(routes =>
             {
@@ -71,6 +89,11 @@ namespace Project_MovieApplication
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
         }
+
+
+
     }
 }
