@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_MovieApplication.Data;
 
 namespace Project_MovieApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190105122445_UserId")]
+    partial class UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,6 +205,8 @@ namespace Project_MovieApplication.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(1000);
 
+                    b.Property<string>("ImagePath");
+
                     b.Property<int>("MovieGenre");
 
                     b.Property<int>("NoOfReviews");
@@ -211,13 +215,11 @@ namespace Project_MovieApplication.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(128);
 
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Movie");
                 });
@@ -239,15 +241,9 @@ namespace Project_MovieApplication.Data.Migrations
 
                     b.Property<DateTime>("ReviewDate");
 
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MovieReviewId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Review");
                 });
@@ -301,7 +297,7 @@ namespace Project_MovieApplication.Data.Migrations
                 {
                     b.HasOne("Project_MovieApplication.Data.ApplicationUser", "User")
                         .WithMany("Movies")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("Project_MovieApplication.Models.Review", b =>
@@ -309,10 +305,6 @@ namespace Project_MovieApplication.Data.Migrations
                     b.HasOne("Project_MovieApplication.Models.Movie", "MovieReview")
                         .WithMany()
                         .HasForeignKey("MovieReviewId");
-
-                    b.HasOne("Project_MovieApplication.Data.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project_MovieApplication.Data;
 using Project_MovieApplication.Models;
+
 
 namespace Project_MovieApplication.Controllers
 {
@@ -16,11 +18,12 @@ namespace Project_MovieApplication.Controllers
     public class MoviesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-
-        public MoviesController(ApplicationDbContext context)
+        public MoviesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Movies
@@ -52,12 +55,15 @@ namespace Project_MovieApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details([Bind("MovieId, Content, Rating")] MovieDetailsViewModel viewModel)
+        public async Task<IActionResult> Details([Bind("MovieId, Content, Rating, ReviewDate, UserName, UserId")] MovieDetailsViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 Review review = new Review();
 
+                var currentUserId = _userManager.GetUserId(HttpContext.User);
+                review.UserId = currentUserId;
+                review.UserName = HttpContext.User.Identity.Name;
                 review.Content = viewModel.Content;
                 review.Rating = viewModel.Rating;
                 review.ReviewDate = DateTime.Now;
@@ -75,7 +81,8 @@ namespace Project_MovieApplication.Controllers
 
                 CountReviews(movie);
                 CalculateMovieScore(review, movie);
-                CalculateAverageScore(movie);
+               
+               // CalculateAverageScore(movie);
                 await _context.SaveChangesAsync();
 
                 viewModel = await GetMovieDetailsViewModelFromMovie(movie);
@@ -128,11 +135,13 @@ namespace Project_MovieApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,AverageRating,MovieGenre,NoOfReviews")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,AverageRating,MovieGenre,NoOfReviews,UserName,UserId")] Movie movie)
         {
             if (ModelState.IsValid)
             {
-         
+                var currentUserId = _userManager.GetUserId(HttpContext.User);
+                movie.UserId = currentUserId;
+                movie.UserName = HttpContext.User.Identity.Name;
                 movie.AverageRating = 0;
                 movie.NoOfReviews = 0;
                 _context.Add(movie);

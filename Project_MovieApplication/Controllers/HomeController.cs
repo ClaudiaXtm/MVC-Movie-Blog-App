@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Project_MovieApplication.Data;
 using Project_MovieApplication.Models;
 
 namespace Project_MovieApplication.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
@@ -31,14 +38,6 @@ namespace Project_MovieApplication.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-      
-        public IActionResult Analytics()
-        {
-            ViewData["Message"] = "Your analytics page.";
 
             return View();
         }

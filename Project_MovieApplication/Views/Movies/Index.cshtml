@@ -4,15 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Movies</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="movie-button">Create New</a>
 </p>
 
 
 
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
 
@@ -31,36 +31,73 @@
             <th>
                 @Html.DisplayNameFor(model => model.NoOfReviews)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AverageRating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MovieGenre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NoOfReviews)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageRating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MovieGenre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfReviews)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
-</table>
+</table>*@
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+        <div class="col-xs-6" id="movie-card">
+            <h1> @Html.DisplayFor(modelItem => item.Title)</h1>
+           
+                 <span>   @Html.DisplayFor(modelItem => item.NoOfReviews) reviews</span>
+                   
+                 <span>      @Html.DisplayFor(modelItem => item.AverageRating)   <span style="color:#ff5b84; font-size:1.2em;">&#9733</span></span>
+                      
+              
+                 <span>      @Html.DisplayFor(modelItem => item.MovieGenre) </span>
+                   
+         
+            <p class="movie-description">
+                @Html.DisplayFor(modelItem => item.Description)
+            </p>
+            <p class="username"><a>Posted by </a>  @Html.DisplayFor(modelItem => item.UserName)</p>
+            <div class="buttons">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="movie-button">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="movie-button">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="movie-button">Delete</a>
+            </div>
+        </div>
+            
+        }
+        </div>
+</div>

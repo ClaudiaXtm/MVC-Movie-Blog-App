@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_MovieApplication.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,7 @@ namespace Project_MovieApplication.Models
 
         [Required]
         [MinLength(2), MaxLength(2000)]
+        [Display(Name = "Comment")]
         public string Content { get; set; }
 
         [Required]
@@ -24,6 +26,14 @@ namespace Project_MovieApplication.Models
         public decimal Rating { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "Date of review")]
         public DateTime ReviewDate { get; set; }
+
+        [Display(Name = "Posted by")]
+        public virtual string UserName { get; set; }
+
+        public virtual string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
     }
 }

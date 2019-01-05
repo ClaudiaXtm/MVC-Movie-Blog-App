@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Project_MovieApplication.Models.AccountsAndReviews>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<h2>Customer analytics</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                UserName
+            <th>
+                Number of reviews
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @item.CountReviews
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>
