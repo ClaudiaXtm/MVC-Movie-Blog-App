@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Project_MovieApplication.Models.Movie>
+
+<h2>Top reviewed movies</h2>
+<hr/>
+
+<div class="list-group">
+
+    @foreach (var item in Model)
+    {
+
+      <div class="list-group-item">
+
+            <a href="">@item.Title</a>
+
+            <span class="badge" style="float:right;">@item.NoOfReviews</span>
+        </div>
+
+
+    }
+
+</div>

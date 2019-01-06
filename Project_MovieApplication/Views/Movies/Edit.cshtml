@@ -4,41 +4,49 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
 
-<h4>Movie</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-       
-            <div class="form-group">
-                <label asp-for="MovieGenre" class="control-label"></label>
-                <select asp-for="MovieGenre" asp-items="Html.GetEnumSelectList<Genre>()" class="form-control"></select>
-                <span asp-validation-for="MovieGenre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row">
+
+        <div class="d-flex justify-content-center" id="movie-card-form">
+            <h1> Edit movie</h1>
+            <hr />
+            <form asp-action="Edit" class="form-movie">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label" style="color:#ff5b84;"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label" style="color:#ff5b84;"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MovieGenre" class="control-label" style="color:#ff5b84;"></label>
+                    <select asp-for="MovieGenre" asp-items="Html.GetEnumSelectList<Genre>()" class="form-control"></select>
+                    <span asp-validation-for="MovieGenre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="movie-button" />
+                </div>
+            </form>
+        </div>
+
+
     </div>
 </div>
 
+
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="movie-button">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -4,46 +4,51 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-
-
-    <h4>Movie</h4>
-    <hr />
+<hr />
+<div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
+
+        <div class="d-flex justify-content-center" id="movie-card-form">
+            <h1> Create new movie</h1>
+            <hr />
+            <form asp-action="Create" class="form-movie">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label>
+                    <label asp-for="Title" class="control-label" style="color:#ff5b84;"></label>
                     <input asp-for="Title" class="form-control" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
+                    <label asp-for="Description" class="control-label" style="color:#ff5b84;"></label>
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="MovieGenre" class="control-label"></label>
+                    <label asp-for="MovieGenre" class="control-label" style="color:#ff5b84;"></label>
                     <select asp-for="MovieGenre" asp-items="Html.GetEnumSelectList<Genre>()" class="form-control"></select>
                     <span asp-validation-for="MovieGenre" class="text-danger"></span>
                 </div>
 
-             
-              
-
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Create" class="movie-button" />
                 </div>
             </form>
         </div>
-    </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index" class="movie-button">Back to List</a>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

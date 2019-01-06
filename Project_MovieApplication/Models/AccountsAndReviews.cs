@@ -10,5 +10,7 @@ namespace Project_MovieApplication.Models
     {
         public string UserName;
         public int CountReviews;
+
+        public List<Movie> Movies { get; set; }
     }
 }

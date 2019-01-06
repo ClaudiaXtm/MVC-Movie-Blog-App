@@ -24,7 +24,7 @@ namespace Project_MovieApplication.Models
         public decimal Rating { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Date of review")]
         public DateTime ReviewDate { get; set; }
 

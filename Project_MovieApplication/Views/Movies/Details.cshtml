@@ -5,115 +5,101 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="dl-horizontal">
-      
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Movie.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Movie.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Movie.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Movie.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Movie.AverageRating)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Movie.AverageRating)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Movie.MovieGenre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Movie.MovieGenre)
-        </dd>
-        <dd>
-            This movie has @Html.DisplayFor(model => model.Movie.NoOfReviews) reviews.
-        </dd>
-    </dl>
-</div>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Review
-            </th>
-            <th>
-                Rating
-            </th>
-            <th>
-                Date of the review
-            </th>
-            <th>
-                Posted By
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Review item in Model.Reviews)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-
-
-<h4>Add review</h4>
+<h2>@Html.DisplayFor(model => model.Movie.Title)</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Details">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        
-            <input type="hidden" asp-for="MovieId" value="@Model.Movie.Id" />
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-              
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div>
-    
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-6" id="movie-card">
+            <h1>@Html.DisplayFor(model => model.Movie.Title)</h1>
+            <hr />
+
+            <span>   @Html.DisplayFor(model => model.Movie.NoOfReviews) reviews</span>
+
+            <span>      @Html.DisplayFor(model => model.Movie.AverageRating)   <span style="color:#ff5b84; font-size:1.2em;">&#9733</span></span>
+
+
+            <span>      @Html.DisplayFor(model => model.Movie.MovieGenre) </span>
+
+
+            <p class="movie-description">
+                @Html.DisplayFor(model => model.Movie.Description)
+            </p>
+            <p class="username"><a>Posted by </a>  @Html.DisplayFor(model => model.Movie.UserName)</p>
+            <div class="buttons">
+                @if (ViewContext.HttpContext.User.IsInRole("Member"))
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Movie.Id" class="movie-button">Edit movie</a>
+                }
+                    <a asp-action="Index" class="movie-button">Back to List</a>
+                </div>
+
+        </div>
+
+        <div class="col-xs-6" id="movie-card">
+            <h1>Add new comment</h1>
+            <hr />
+            <form asp-action="Details" class="form-movie">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="MovieId" value="@Model.Movie.Id" />
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea rows="2" cols="50" style="max-width:100%;" asp-for="Content" class="form-control"></textarea>
+                    @*<input asp-for="Content" class="form-control" />*@
+
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Rating" class="control-label"></label>
+                    <input type="number" min="0" max="10" step=".01" asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+
+                
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="movie-button" />
+                    </div>
+                
+            </form>
+        </div>
+
     </div>
 </div>
 
 
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Movie.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<hr />
+
+
+<h1>Reviews</h1>
+
+<div class="comments-container">
+    <ul id="comments-list" class="comments-list">
+        <li>
+            <div class="comment-main-level">
+
+                <div class="comment-box">
+                    @foreach (Review item in Model.Reviews)
+                    {
+                        <div class="comment-head">
+                            <h6 class="comment-name by-author"><a>@Html.DisplayFor(modelItem => item.UserName)</a></h6>
+
+                            <i> @Html.DisplayFor(modelItem => item.ReviewDate)</i>
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <div class="comment-content">
+                            @Html.DisplayFor(modelItem => item.Content)
+                            <br />
+                            <span>    @Html.DisplayFor(modelItem => item.Rating) /10      <span style="color:#ff5b84; font-size:1.2em;">&#9733</span></span>
+                        </div>
+                    }
+                </div>
+            </div>
+    </ul>
 </div>
+
+<div style="height: 40px"></div>

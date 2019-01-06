@@ -36,10 +36,24 @@
             @Html.DisplayFor(model => model.MovieGenre)
         </dd>
     </dl>
-    
+
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Info!</strong> @TempData["message"]
+
+            </div>
+         <style>
+             #deletebtn {
+                 display: none;
+             }
+         </style>
+}
+        <input type="submit" value="Delete" class="movie-button" id="deletebtn"  /> 
+        <a asp-action="Index" class="movie-button">Back to List</a>
     </form>
 </div>

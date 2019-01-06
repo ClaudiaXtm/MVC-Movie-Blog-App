@@ -133,6 +133,8 @@ namespace Project_MovieApplication.Controllers
         // POST: Movies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [Authorize(Roles = "Member")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,AverageRating,MovieGenre,NoOfReviews,UserName,UserId")] Movie movie)
@@ -152,7 +154,9 @@ namespace Project_MovieApplication.Controllers
         }
 
         // GET: Movies/Edit/5
-        [ValidateAntiForgeryToken]
+        //  [ValidateAntiForgeryToken]
+
+        [Authorize(Roles = "Member")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -171,9 +175,11 @@ namespace Project_MovieApplication.Controllers
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [Authorize(Roles = "Member")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,AverageRating,MovieGenre")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,AverageRating,MovieGenre,NoOfReviews,UserName,UserId")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -204,6 +210,8 @@ namespace Project_MovieApplication.Controllers
         }
 
         // GET: Movies/Delete/5
+
+        [Authorize(Roles = "Member")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -223,15 +231,26 @@ namespace Project_MovieApplication.Controllers
         }
 
         // POST: Movies/Delete/5
+
+        [Authorize(Roles = "Member")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movie = await _context.Movie.FindAsync(id);
-            
+           
+            if(movie.NoOfReviews != 0)
+            {
+                string reviewsErr = string.Format("This movie can't be deleted because it has {0} reviews", movie.NoOfReviews);
+                TempData["message"] = reviewsErr;
+                return View(movie);
+            }
+
+
             _context.Movie.Remove(movie);
 
             await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
@@ -239,7 +258,24 @@ namespace Project_MovieApplication.Controllers
         {
             return _context.Movie.Any(e => e.Id == id);
         }
-      
+
+
+        public void DecreaseNumberOfReviews(int Id)
+        {
+            Movie model = new Movie();
+            if (Id != 0)
+            {
+
+                model = _context.Movie.Find(Id);
+                if (model.NoOfReviews != 0)
+                {
+                    model.NoOfReviews = model.NoOfReviews - 1;
+
+                    _context.SaveChanges();
+                }
+            }
+        }
+
     }
 
    
