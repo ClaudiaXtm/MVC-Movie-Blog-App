@@ -82,7 +82,6 @@ namespace Project_MovieApplication.Controllers
                 CountReviews(movie);
                 CalculateMovieScore(review, movie);
                
-               // CalculateAverageScore(movie);
                 await _context.SaveChangesAsync();
 
                 viewModel = await GetMovieDetailsViewModelFromMovie(movie);

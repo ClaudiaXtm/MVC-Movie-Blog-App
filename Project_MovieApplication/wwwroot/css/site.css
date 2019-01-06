@@ -31,7 +31,19 @@ body:after {
     padding-left: 15px;
     padding-right: 15px;
 }
+.homepage{
+    text-align:center;
+    margin:auto;
+}
 
+.empty{
+    height: 120px;
+}
+
+#title{
+    margin-top: 3%;
+    margin-bottom:5%;
+}
 
 /*Movie library*/
 #movie-card {
@@ -160,6 +172,16 @@ a:hover {
     margin-top: 5%;
 }
 
+.buttons-analytics {
+    text-align:center;
+    margin:auto;
+    display: inline-block;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    margin-top: 5%;
+}
+
 #buttons {
     display: inline-block;
     position: relative;
@@ -194,6 +216,28 @@ a:hover {
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+.movie-button-analytics {
+    border: 1px solid white;
+    border-radius: 4px;
+    position: relative;
+    padding: 40px;
+    text-align: center;
+    background: rgba(0, 0, 0, .3);
+    margin: 20px 10px;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+    transition: all .2s;
+}
+
+    .movie-button-analytics:hover {
+        background: rgba(255, 255, 255, .8);
+        box-shadow: 0 0 10px rgba(255,255,255,.5);
+    }
+
+    .movie-button-analytics:active {
+        transform: translateY(2px);
+    }
 
 
 /* Comments */

@@ -1,14 +1,20 @@
 ﻿@model IEnumerable<Project_MovieApplication.Models.Movie>
 
-<h2>Top reviewed movies</h2>
-<hr/>
+<h2>Customer analytics</h2>
+<hr />
 
 <div class="list-group">
+
+    <div class="list-group-item">
+        <p style="text-align:center; color:#ff5b84;  font-size:16px;  font-weight:600; ">
+            Most reviewed movies
+        </p>
+    </div>
 
     @foreach (var item in Model)
     {
 
-      <div class="list-group-item">
+        <div class="list-group-item">
 
             <a href="">@item.Title</a>
 
@@ -19,3 +25,10 @@
     }
 
 </div>
+
+<div class="buttons-analytics">
+    <a asp-area="" asp-controller="Analytics" asp-action="Index" class="movie-button-analytics">See the reviewer's statistics</a>
+    <a asp-area="" asp-controller="Analytics" asp-action="LatestReviews" class="movie-button-analytics">See the latest comments</a>
+</div>
+
+<div class="empty"></div>

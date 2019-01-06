@@ -8,16 +8,32 @@
 
 
 <h2>Customer analytics</h2>
+<hr />
 
 <div class="list-group">
+
+    <div class="list-group-item">
+        <p style="text-align:center; color:#ff5b84;  font-size:16px;  font-weight:600; ">
+            Number of reviews given by customers
+        </p>
+    </div>
+
     @foreach (var item in Model)
     {
-    <div class="list-group-item">
-        <a href="">  @Html.DisplayFor(modelItem => item.UserName)</a>
+        <div class="list-group-item">
 
-        <span class="badge" style="float:right;">     @item.CountReviews </span>
-    </div>
+            <a href="">  @Html.DisplayFor(modelItem => item.UserName)</a>
+
+            <span class="badge" style="float:right;">     @item.CountReviews </span>
+        </div>
     }
 
 
-    </div>
+</div>
+
+<div class="buttons-analytics">
+    <a asp-area="" asp-controller="Analytics" asp-action="TopMovies" class="movie-button-analytics">See the most reviewed movies</a>
+    <a asp-area="" asp-controller="Analytics" asp-action="LatestReviews" class="movie-button-analytics">See the latest comments</a>
+</div>
+
+<div class="empty"></div>
