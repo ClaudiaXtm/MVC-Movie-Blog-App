@@ -36,6 +36,7 @@
                     <div class="buttons">
 
                         <a asp-action="Details" asp-route-id="@item.Id" class="movie-button">View details</a>
+                        @*<a asp-action="AddToWatchlist" asp-controller="Watchlist" asp-route="@item.Id"  class="movie-button">Add to watchlist</a>*@
                         @if (ViewContext.HttpContext.User.IsInRole("Member"))
                         {
                             <a asp-action="Delete" asp-route-id="@item.Id" class="movie-button">Delete movie</a>

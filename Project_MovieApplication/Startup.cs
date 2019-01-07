@@ -38,10 +38,7 @@ namespace Project_MovieApplication
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
-            //Asta merge relativ, doar ca nu distinge rolurile in authorize
-            //services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
-            //      .AddEntityFrameworkStores<ApplicationDbContext>();
+       
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(
                     options => options.Stores.MaxLengthForKeys = 128)
@@ -80,8 +77,8 @@ namespace Project_MovieApplication
             app.UseAuthentication();
 
             SeedDatabaseWithUsersAndRoles.Initialize(context, userManager, roleManager).Wait();
-            // IdentityDataInitializer.SeedIdentityData(userManager, roleManager);
-            DbInitializer.SeedDb(context);
+           
+            SeedDatabaseWithMoviesAndReviews.SeedDb(context);
        
             app.UseMvc(routes =>
             {

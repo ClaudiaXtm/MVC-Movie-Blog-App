@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label asp-for="Content" class="control-label"></label>
                     <textarea rows="2" cols="50" style="max-width:100%;" asp-for="Content" class="form-control"></textarea>
-                    @*<input asp-for="Content" class="form-control" />*@
+                   
 
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
@@ -78,7 +78,7 @@
 <h1>Reviews</h1>
 
 <div class="comments-container">
-    <ul id="comments-list" class="comments-list">
+
         <li>
             <div class="comment-main-level">
 
@@ -89,7 +89,7 @@
                             <h6 class="comment-name by-author"><a>@Html.DisplayFor(modelItem => item.UserName)</a></h6>
 
                             <i> @Html.DisplayFor(modelItem => item.ReviewDate)</i>
-                            <i class="fa fa-heart"></i>
+                         
                         </div>
                         <div class="comment-content">
                             @Html.DisplayFor(modelItem => item.Content)
@@ -99,7 +99,7 @@
                     }
                 </div>
             </div>
-    </ul>
+    </li>
 </div>
 
 <div style="height: 40px"></div>

@@ -40,6 +40,8 @@ namespace Project_MovieApplication.Models
         public virtual string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+
+      
     }
 
     public enum Genre

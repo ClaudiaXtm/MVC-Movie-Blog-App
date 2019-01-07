@@ -15,6 +15,7 @@ namespace Project_MovieApplication.Data
 
         public DbSet<Project_MovieApplication.Models.Movie> Movie { get; set; }
         public DbSet<Project_MovieApplication.Models.Review> Review { get; set; }
+     
     
     }
 }
